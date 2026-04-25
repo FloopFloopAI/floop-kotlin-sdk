@@ -13,7 +13,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        jdk: ["11", "17", "21"]
+        # JDK 17+ to *build* (Gradle 8.10+ requires it), but the produced
+        # artifact still targets JDK 11 bytecode via kotlin.jvmToolchain(11)
+        # — consumers running on JDK 11+ can use the published artifact.
+        # See README "Requires" section for the runtime-vs-build distinction.
+        jdk: ["17", "21"]
     steps:
       - uses: actions/checkout@v6
 

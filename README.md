@@ -57,7 +57,9 @@ dependencies {
 </dependency>
 ```
 
-Requires Kotlin 2.0+ and Java 11+. Two runtime deps: `okhttp` (HTTP transport) and `kotlinx-serialization-json` + `kotlinx-coroutines-core`.
+**Runtime:** JVM 11+. The published artifact targets Java 11 bytecode (via `kotlin.jvmToolchain(11)`). Two runtime deps: `okhttp` (HTTP transport) and `kotlinx-serialization-json` + `kotlinx-coroutines-core`.
+
+**Build-from-source:** Kotlin 2.0+ and JDK 17+. Gradle 8.10+ requires JDK 17 to *run* — the JDK 11 entry in the CI matrix was dropped accordingly. Consumers don't need JDK 17 to *use* the SDK; that's a build-tooling-only requirement.
 
 ## Quickstart
 
