@@ -1,0 +1,10 @@
+build/
+.gradle/
+*.iml
+.idea/
+out/
+*.class
+.kotlin/
+hs_err_pid*
+local.properties
+.DS_Store

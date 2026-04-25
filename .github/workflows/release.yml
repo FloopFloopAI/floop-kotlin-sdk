@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Verify FloopFloopSDK.VERSION matches tag
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG=$(grep -oE 'VERSION: String = "[^"]+"' src/main/kotlin/com/floopfloop/sdk/Version.kt | head -1 | sed 's/.*"\([^"]*\)".*/\1/')
+          if [ "$TAG" != "$PKG" ]; then
+            echo "Tag $GITHUB_REF_NAME (→ $TAG) does not match FloopFloopSDK.VERSION $PKG"
+            exit 1
+          fi
+
+      - name: Build + test
+        run: ./gradlew build --no-daemon
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-alpha') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-rc') }}
+
+      # JitPack picks up the new tag automatically — no publish step needed.
+      # First-time consumers may see a one-off ~30 s build delay while
+      # JitPack compiles the artifact on demand; it's cached afterwards.
