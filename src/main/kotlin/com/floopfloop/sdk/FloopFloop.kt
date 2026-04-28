@@ -5,6 +5,7 @@ import com.floopfloop.sdk.resources.Library
 import com.floopfloop.sdk.resources.Projects
 import com.floopfloop.sdk.resources.Secrets
 import com.floopfloop.sdk.resources.Subdomains
+import com.floopfloop.sdk.resources.Subscriptions
 import com.floopfloop.sdk.resources.Uploads
 import com.floopfloop.sdk.resources.Usage
 import com.floopfloop.sdk.resources.UserApi
@@ -70,6 +71,7 @@ public class FloopFloop(
     public val secrets: Secrets by lazy { Secrets(this) }
     public val library: Library by lazy { Library(this) }
     public val usage: Usage by lazy { Usage(this) }
+    public val subscriptions: Subscriptions by lazy { Subscriptions(this) }
     public val apiKeys: ApiKeys by lazy { ApiKeys(this) }
     public val uploads: Uploads by lazy { Uploads(this) }
     public val user: UserApi by lazy { UserApi(this) }

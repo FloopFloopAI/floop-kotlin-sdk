@@ -2,6 +2,36 @@
 
 All notable changes to `floop-kotlin-sdk` are documented here.
 
+## [0.1.0-alpha.3] — 2026-04-28
+
+### Added
+- **`client.subscriptions.current()`** — new resource accessor that wraps
+  `GET /api/v1/subscriptions/current` and returns the authenticated user's
+  plan + credit-balance snapshot. Distinct from `usage.summary()` —
+  `usage.summary()` covers current-period consumption (credits remaining,
+  builds used, storage), while `subscriptions.current()` returns the plan
+  tier itself (price, billing period, cancel state). They overlap on
+  `monthlyCredits` and `maxProjects` but serve different audiences ("am I
+  about to hit my limits?" vs "what plan am I on, and when does it
+  renew?").
+- New types `CurrentSubscription`, `SubscriptionPlan`, `SubscriptionCredits`.
+  Both `subscription` and `credits` on `CurrentSubscription` are nullable
+  and can be `null` independently — a user may exist without an active
+  subscription (mid-signup, cancelled with no grace credits). The
+  `features` map is typed as `JsonObject` so callers can inspect new
+  backend feature flags without us cutting a release each time.
+
+### Changed
+- `FloopFloopSDK.VERSION` and `build.gradle.kts#version` both bumped to
+  `0.1.0-alpha.3` (release workflow verifies both).
+
+### Tests
+- New `SubscriptionsTest.kt` with two cases (populated, both-null).
+
+### Notes
+- Mirrors [`@floopfloop/sdk` PR #6](https://github.com/FloopFloopAI/floop-node-sdk/pull/6)
+  (Node `0.1.0-alpha.3`) — cross-SDK parity drop.
+
 ## [0.1.0-alpha.2] — 2026-04-28
 
 ### Changed — heads-up for downstream consumers
