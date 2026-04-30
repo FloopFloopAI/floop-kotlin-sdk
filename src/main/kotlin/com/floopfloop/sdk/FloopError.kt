@@ -63,5 +63,7 @@ public object FloopErrorCode {
     public const val TIMEOUT: String = "TIMEOUT"
     public const val BUILD_FAILED: String = "BUILD_FAILED"
     public const val BUILD_CANCELLED: String = "BUILD_CANCELLED"
+    public const val INSUFFICIENT_CREDITS: String = "INSUFFICIENT_CREDITS"
+    public const val PAYMENT_FAILED: String = "PAYMENT_FAILED"
     public const val UNKNOWN: String = "UNKNOWN"
 }
